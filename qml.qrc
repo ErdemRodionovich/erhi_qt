@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>chetki.jpg</file>
+        <file>tri tochki png.png</file>
+    </qresource>
+</RCC>
