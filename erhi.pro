@@ -1,4 +1,4 @@
-QT += quick
+QT += quick androidextras
 
 CONFIG += c++11
 
@@ -7,6 +7,9 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+        ../native_utils/native_utils.cpp \
+        ../native_utils/qt_android_extras/qt_android_extras.cpp \
+        erhi_main.cpp \
         main.cpp
 
 RESOURCES += qml.qrc
@@ -33,9 +36,15 @@ DISTFILES += \
     android/gradle/wrapper/gradle-wrapper.properties \
     android/gradlew \
     android/gradlew.bat \
-    android/res/values/libs.xml
+    android/res/values/libs.xml \
+    android/src/org/gnaadan/AndroidExtras.java
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_PACKAGE_SOURCE_DIR = \
         $$PWD/android
 }
+
+HEADERS += \
+    ../native_utils/native_utils.h \
+    ../native_utils/qt_android_extras/qt_android_extras.h \
+    erhi_main.h

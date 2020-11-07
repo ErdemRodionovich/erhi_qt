@@ -7,6 +7,8 @@ Window {
     visible: true
     title: qsTr("Erhi")
 
+    signal vibrate(int duration)
+
     property int curTicks: 0
     property int curCircles: 0
     property int circleCount: 10
@@ -26,10 +28,14 @@ Window {
 
             }
 
+            vibrate(1000);
+
         }
 
         curCount_Txt.text = curTicks;
         curCircle_Txt.text = curCircles;
+
+        vibrate(100);
 
     }
 
