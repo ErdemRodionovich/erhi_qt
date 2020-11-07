@@ -2,6 +2,8 @@ import QtQuick 2.12
 import QtQuick.Window 2.12
 
 Window {
+    id:mainWindow
+    objectName: "mainWindow"
     width: 640
     height: 480
     visible: true
@@ -35,7 +37,7 @@ Window {
         curCount_Txt.text = curTicks;
         curCircle_Txt.text = curCircles;
 
-        vibrate(100);
+        //vibrate(100);
 
     }
 
@@ -58,6 +60,10 @@ Window {
             width: 44
             source: "tri tochki 1000.png"
             fillMode: Image.PreserveAspectFit
+            MouseArea{
+                anchors.fill: parent
+                onClicked: menu.visible = true
+            }
         }
 
         Image {
@@ -128,4 +134,119 @@ Window {
             onClicked: onTick();
         }
     }
+
+    Rectangle{
+        id: menu
+        objectName: "menu"
+        visible: false
+        x:0
+        y:0
+        width: parent.width
+        height: parent.height
+
+        Image {
+            id: menu_button_in_menu
+            objectName: "menu_button_in_menu"
+            anchors.left: parent.left
+            anchors.top: parent.top
+            anchors.margins: 8
+            height: 30
+            width: 44
+            source: "tri tochki 1000.png"
+            fillMode: Image.PreserveAspectFit
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    menu.visible = false
+                    ticksPerCircle_Edit.focus = false
+                    circleCount_Edit.focus = false
+                }
+            }
+        }
+
+        Rectangle{
+
+            id:ticksPerCircle_Edit_Group
+            objectName: "ticksPerCircle_Edit_Group"
+            anchors.top: menu_button_in_menu.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            height: 30
+
+            Text{
+
+                id:ticksPerCircle_Edit_Label
+                objectName: "ticksPerCircle_Edit_Label"
+                anchors.top: parent.top
+                anchors.left: parent.left
+                text: qsTr("Ticks per circle:")
+                font.pointSize: 20
+                font.family: "Arial"
+
+            }
+
+            TextInput{
+
+                id:ticksPerCircle_Edit
+                objectName: "ticksPerCircle_Edit"
+
+                anchors.left: ticksPerCircle_Edit_Label.right
+                anchors.right: parent.right
+                anchors.top: parent.top
+                font.pointSize: 20
+                inputMask: "999999"
+                text: ticksPerCircle
+                onTextEdited: {
+                    if(text == 0){
+                        text = 1
+                    }
+                    ticksPerCircle = text
+                }
+
+            }
+
+        }
+
+        Rectangle{
+
+            id:circleCount_Edit_Group
+            objectName: "circleCount_Edit_Group"
+            anchors.top: ticksPerCircle_Edit_Group.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+
+            Text {
+                id: circleCount_Edit_Label
+                objectName: "circleCount_Edit_Label"
+                text: qsTr("Circle count:")
+                font.pointSize: 20
+                font.family: "Arial"
+                anchors.top: parent.top
+                anchors.left: parent.left
+            }
+
+            TextInput{
+
+                id:circleCount_Edit
+                objectName: "circleCount_Edit"
+                inputMask: "999999"
+                text: circleCount
+                font.pointSize: 20
+                font.family: "Arial"
+                anchors.left: circleCount_Edit_Label.right
+                anchors.top: parent.top
+                anchors.right: parent.right
+                onTextEdited: {
+                    if(text == 0){
+                        text = 1
+                    }
+                    circleCount = text
+                }
+
+            }
+
+        }
+
+    }
+
 }

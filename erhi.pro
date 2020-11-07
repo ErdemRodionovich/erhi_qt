@@ -15,7 +15,8 @@ SOURCES += \
 RESOURCES += qml.qrc
 
 TRANSLATIONS += \
-    erhi_ru_RU.ts
+    erhi_ru_RU.ts \
+    erhi_bua_BUA.ts
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH =
@@ -37,7 +38,8 @@ DISTFILES += \
     android/gradlew \
     android/gradlew.bat \
     android/res/values/libs.xml \
-    android/src/org/gnaadan/AndroidExtras.java
+    android/src/org/gnaadan/AndroidExtras.java \
+    erhi_bua_BUA.ts
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_PACKAGE_SOURCE_DIR = \

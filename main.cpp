@@ -1,5 +1,4 @@
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
+
 #include <erhi_main.h>
 
 int main(int argc, char *argv[])
@@ -10,7 +9,7 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-    erhi_main er;
+    erhi_main er(&engine, &app);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,
