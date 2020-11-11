@@ -1,5 +1,7 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
+import QtQuick.Controls 2.5
+
 
 Window {
     id:mainWindow
@@ -191,7 +193,7 @@ Window {
                 objectName: "ticksPerCircle_Edit"
 
                 anchors.left: ticksPerCircle_Edit_Label.right
-                anchors.right: parent.right
+                //anchors.right: parent.right
                 anchors.top: parent.top
                 font.pointSize: 20
                 inputMask: "999999"
@@ -204,6 +206,21 @@ Window {
                 }
 
             }
+
+            SpinBox{
+
+                id:ticksPerCircle_Edit_SpinBox
+                objectName: "ticksPerCircle_Edit_SpinBox"
+                from:1
+                value: ticksPerCircle
+                to:999
+                stepSize: 1
+                anchors.left: ticksPerCircle_Edit.right
+                anchors.top: parent.top
+
+
+            }
+
 
         }
 
