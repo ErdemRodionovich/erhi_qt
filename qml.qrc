@@ -10,5 +10,6 @@
         <file>mStyle/CheckBox.qml</file>
         <file>mStyle/Switch.qml</file>
         <file>imports/Theme/qmldir</file>
+        <file>MSpinBox.qml</file>
     </qresource>
 </RCC>
