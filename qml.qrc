@@ -5,5 +5,10 @@
         <file>tri tochki png.png</file>
         <file>update png 2.png</file>
         <file>tri tochki 1000.png</file>
+        <file>imports/Theme/Theme.qml</file>
+        <file>mStyle/Button.qml</file>
+        <file>mStyle/CheckBox.qml</file>
+        <file>mStyle/Switch.qml</file>
+        <file>imports/Theme/qmldir</file>
     </qresource>
 </RCC>

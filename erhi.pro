@@ -1,4 +1,4 @@
-QT += quick androidextras
+QT += quick androidextras quickcontrols2 widgets
 
 CONFIG += c++11
 
@@ -12,14 +12,23 @@ SOURCES += \
         erhi_main.cpp \
         main.cpp
 
-RESOURCES += qml.qrc
+RESOURCES += qml.qrc \
+    qtquickcontrols2.conf \
+    android/AndroidManifest.xml \
+    android/build.gradle \
+    android/gradle/wrapper/gradle-wrapper.jar \
+    android/gradle/wrapper/gradle-wrapper.properties \
+    android/gradlew \
+    android/gradlew.bat \
+    android/res/values/libs.xml \
+    android/src/org/gnaadan/AndroidExtras.java
 
 TRANSLATIONS += \
     erhi_ru_RU.ts \
     erhi_bua_BUA.ts
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
-QML_IMPORT_PATH =
+QML_IMPORT_PATH = $$PWD/imports
 
 # Additional import path used to resolve QML modules just for Qt Quick Designer
 QML_DESIGNER_IMPORT_PATH =
@@ -30,7 +39,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 DISTFILES += \
-    TODO \
+    TODO.txt \
     android/AndroidManifest.xml \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.jar \
@@ -39,7 +48,8 @@ DISTFILES += \
     android/gradlew.bat \
     android/res/values/libs.xml \
     android/src/org/gnaadan/AndroidExtras.java \
-    erhi_bua_BUA.ts
+    erhi_bua_BUA.ts \
+    qtquickcontrols2.conf
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_PACKAGE_SOURCE_DIR = \
@@ -50,3 +60,8 @@ HEADERS += \
     ../native_utils/native_utils.h \
     ../native_utils/qt_android_extras/qt_android_extras.h \
     erhi_main.h
+
+contains(ANDROID_TARGET_ARCH,x86) {
+    ANDROID_PACKAGE_SOURCE_DIR = \
+        $$PWD/android
+}

@@ -1,6 +1,8 @@
 import QtQuick 2.12
 import QtQuick.Window 2.12
 import QtQuick.Controls 2.5
+import QtQuick.Layouts 1.12
+import Theme 1.0
 
 
 Window {
@@ -49,19 +51,22 @@ Window {
         x: 0
         y: 0
         width: parent.width
-        height: 30
+        height: Theme.dpcm*1
         color: "#ffffff"
 
-        Image {
+        Rectangle {
             id: menu_button
             objectName: "menu_button"
             anchors.left: footer.left
             anchors.top: footer.top
             anchors.bottom: footer.bottom
-            anchors.margins: 8
-            width: 44
-            source: "tri tochki 1000.png"
-            fillMode: Image.PreserveAspectFit
+            width: Theme.dpcm*1.5
+            Image{
+                source: "tri tochki 1000.png"
+                fillMode: Image.PreserveAspectFit
+                anchors.fill: parent
+                anchors.margins: Theme.dpcm*0.2
+            }
             MouseArea{
                 anchors.fill: parent
                 onClicked: menu.visible = true
@@ -76,7 +81,7 @@ Window {
             anchors.bottom: footer.bottom
             anchors.right: footer.right
             anchors.margins: 4
-            width: 64
+            width: Theme.dpcm*1.2
             fillMode: Image.PreserveAspectFit
             MouseArea{
                 anchors.fill: parent
@@ -138,6 +143,105 @@ Window {
     }
 
     Rectangle{
+
+        id:menu
+        objectName: "menu"
+        visible: false
+        anchors.fill: parent
+
+        MouseArea{
+            anchors.fill: parent
+        }
+
+        Rectangle{
+
+            id:menuExitButton
+            objectName: "menuExitButton"
+            anchors.top: parent.top
+            anchors.left: parent.left
+            //anchors.right: parent.right
+            height: Theme.dpcm*1
+            width: Theme.dpcm*1.5
+
+            Image {
+                id: menuExitImage
+                objectName: "menuExitImage"
+                source: "tri tochki 1000.png"
+                fillMode: Image.PreserveAspectFit
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
+                anchors.right: parent.right
+                anchors.margins: Theme.dpcm*0.2
+            }
+
+            MouseArea{
+                anchors.fill: parent
+                onClicked: {
+                    menu.visible = false
+                    osnFon.focus = true
+                }
+            }
+
+        }
+
+        ColumnLayout{
+
+            id:settingsColumn
+            objectName: "settingsColumn"
+            spacing: Theme.dpcm*0.1
+
+            anchors.top: menuExitButton.bottom
+            anchors.left: parent.left
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+
+            Rectangle{
+
+                id:groupTicksPerCircle
+                objectName: "groupTicksPerCircle"
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                implicitWidth: Theme.dpcm*6
+                implicitHeight: Theme.dpcm*1.4
+
+
+                Label{
+                    text: qsTr("Ticks per circle:")
+                    anchors.left: parent.left+Theme.dpcm+0.5
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                TextInput{
+
+                    id:ticksPerCircle_Edit
+                    objectName: "ticksPerCircle_Edit"
+
+                    //anchors.left: ticksPerCircle_Edit_Label.right
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    font.pointSize: 20
+                    //inputMask: "999999"
+                    validator: IntValidator{bottom: 1; top: 999999;}
+                    text: ticksPerCircle
+                    onTextEdited: {
+                        if(text == 0){
+                            text = 1
+                        }
+                        ticksPerCircle = text
+                    }
+
+                }
+
+
+            }
+
+        }
+
+    }
+
+
+/*
+    Rectangle{
         id: menu
         objectName: "menu"
         visible: false
@@ -152,8 +256,8 @@ Window {
             anchors.left: parent.left
             anchors.top: parent.top
             anchors.margins: 8
-            height: 30
-            width: 44
+            height: Theme.dpcm*1
+            //width: 44
             source: "tri tochki 1000.png"
             fillMode: Image.PreserveAspectFit
             MouseArea{
@@ -264,6 +368,12 @@ Window {
 
         }
 
-    }
+        Button{
+            id: up_But_Test
+            objectName: "up_But_Test"
+            text: qsTr("Update")
+        }
+
+    }*/
 
 }

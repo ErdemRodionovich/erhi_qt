@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
     QObject::connect(&engine,SIGNAL(objectCreated(QObject*, const QUrl &)),
                      &er,SLOT(onEngineCreated(QObject*, const QUrl &)),
                      Qt::QueuedConnection);
-
+    engine.addImportPath("qrc:/imports");
     engine.load(url);
 
     return app.exec();
