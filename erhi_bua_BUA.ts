@@ -11,5 +11,9 @@
         <source>Ticks per circle:</source>
         <translation>Нэгэ таталгын тоо</translation>
     </message>
+    <message>
+        <source>Circle count:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>

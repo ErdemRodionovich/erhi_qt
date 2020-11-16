@@ -52,7 +52,7 @@ Window {
         y: 0
         width: parent.width
         height: Theme.dpcm*1
-        color: "#ffffff"
+        color: Theme.osnFon
 
         Rectangle {
             id: menu_button
@@ -194,45 +194,72 @@ Window {
             anchors.top: menuExitButton.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            anchors.bottom: parent.bottom
+            //anchors.bottom: parent.bottom
 
             Rectangle{
 
                 id:groupTicksPerCircle
                 objectName: "groupTicksPerCircle"
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-                implicitWidth: Theme.dpcm*6
+                implicitWidth: Theme.dpcm*8
                 implicitHeight: Theme.dpcm*1.4
 
 
                 Label{
                     text: qsTr("Ticks per circle:")
-                    anchors.left: parent.left+Theme.dpcm+0.5
+                    font.pointSize: Theme.dpcm*0.4
+                    anchors.left: parent.left
                     anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: Theme.dpcm*0.2
                 }
 
-                TextInput{
+                SpinBox{
 
-                    id:ticksPerCircle_Edit
-                    objectName: "ticksPerCircle_Edit"
-
-                    //anchors.left: ticksPerCircle_Edit_Label.right
+                    editable: true
+                    from: 1
+                    to: 999999999
+                    value: ticksPerCircle
                     anchors.right: parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    font.pointSize: 20
-                    //inputMask: "999999"
-                    validator: IntValidator{bottom: 1; top: 999999;}
-                    text: ticksPerCircle
-                    onTextEdited: {
-                        if(text == 0){
-                            text = 1
-                        }
-                        ticksPerCircle = text
+                    onValueModified: {
+                        ticksPerCircle = value
                     }
 
                 }
 
 
+            }
+
+            Rectangle{
+
+                id:groupCircleCount
+                objectName: "groupCircleCount"
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                implicitWidth: Theme.dpcm*8
+                implicitHeight: Theme.dpcm*1.4
+
+
+                Label{
+                    text: qsTr("Circle count:")
+                    font.pointSize: Theme.dpcm*0.4
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: Theme.dpcm*0.2
+                }
+
+                SpinBox{
+
+                    editable: true
+                    from: 1
+                    to: 999999999
+                    value: circleCount
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    onValueModified: {
+                        circleCount = value
+                    }
+
+                }
 
             }
 
