@@ -19,6 +19,12 @@ Window {
     property int curCircles: 0
     property int circleCount: 10
     property int ticksPerCircle: 10
+    property int soundNumberOnTick: 0
+    property bool soundOnTick: true
+    property int sounndNumberOnCircle: 0
+    property bool soundOnCircle: true
+    property bool vibrateOnTick: true
+    property bool vibrateOnCircle: true
 
     function onTick(){
 
@@ -41,7 +47,9 @@ Window {
         curCount_Txt.text = curTicks;
         curCircle_Txt.text = curCircles;
 
-        //vibrate(100);
+        if (vibrateOnTick){
+            vibrate(100);
+        }
 
     }
 
@@ -257,6 +265,35 @@ Window {
                     anchors.verticalCenter: parent.verticalCenter
                     onValueModified: {
                         circleCount = value
+                    }
+
+                }
+
+            }
+
+            Rectangle{
+
+                id:groupVibrateOnTick
+                objectName: "groupVibrateOnTick"
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                implicitWidth: Theme.dpcm*8
+                implicitHeight: Theme.dpcm*1.4
+
+                Label{
+                    text: qsTr("Vibrate on tick:")
+                    font.pointSize: Theme.dpcm*0.4
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: Theme.dpcm*0.2
+                }
+
+                Switch{
+
+                    anchors.right: parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    checked: vibrateOnTick
+                    onCheckedChanged: {
+                        vibrateOnTick = checked
                     }
 
                 }

@@ -11,5 +11,10 @@
         <file>mStyle/Switch.qml</file>
         <file>imports/Theme/qmldir</file>
         <file>MSpinBox.qml</file>
+        <file>sounds/Ding-sound-effect.mp3</file>
+        <file>sounds/relaxing-bell-ding-sound.mp3</file>
+        <file>sounds/Magical-chimes-bells-down-sound-effect.mp3</file>
+        <file>sounds/Magical-chimes-bells-up-sound-effect.mp3</file>
+        <file>sounds/160052__jorickhoofd__metal-short-tick.aiff</file>
     </qresource>
 </RCC>

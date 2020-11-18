@@ -55,6 +55,9 @@ void erhi_main::loadSettings(){
             if(j.contains("ticksPerCircle") && j["ticksPerCircle"].isDouble()){
                 proot->setProperty("ticksPerCircle", j["ticksPerCircle"].toInt());
             }
+            if(j.contains("vibrateOnTick") && j["vibrateOnTick"].isBool()){
+                proot->setProperty("vibrateOnTick", j["vibrateOnTick"].toBool());
+            }
 
             qDebug()<<"settings loaded";
 
@@ -72,6 +75,7 @@ void erhi_main::saveSettings(){
 
         j["ticksPerCircle"]=proot->property("ticksPerCircle").toInt();
         j["circleCount"]=proot->property("circleCount").toInt();
+        j["vibrateOnTick"]=proot->property("vibrateOnTick").toBool();
 
         QJsonDocument sdoc(j);
         f.write(sdoc.toJson());
