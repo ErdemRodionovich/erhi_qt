@@ -14,6 +14,7 @@ Window {
     title: qsTr("Erhi")
 
     signal vibrate(int duration)
+    signal setLanguage(string language)
 
     property int curTicks: 0
     property int curCircles: 0
@@ -25,6 +26,7 @@ Window {
     property bool soundOnCircle: true
     property bool vibrateOnTick: true
     property bool vibrateOnCircle: true
+    property string lang: "en"
 
     function onTick(){
 
@@ -50,6 +52,15 @@ Window {
         if (vibrateOnTick){
             vibrate(100);
         }
+
+    }
+
+    function updateTexts(){
+
+        mainWindow.title = qsTr("Erhi");
+        ticksPerCircleLabel.text = qsTr("Ticks per circle:");
+        circleCountLabel.text = qsTr("Circle count:");
+        vibrateOnTickLabel.text = qsTr("Vibrate on tick:");
 
     }
 
@@ -214,6 +225,8 @@ Window {
 
 
                 Label{
+                    id:ticksPerCircleLabel
+                    objectName: "ticksPerCircleLabel"
                     text: qsTr("Ticks per circle:")
                     font.pointSize: Theme.dpcm*0.4
                     anchors.left: parent.left
@@ -248,6 +261,8 @@ Window {
 
 
                 Label{
+                    id:circleCountLabel
+                    objectName: "circleCountLabel"
                     text: qsTr("Circle count:")
                     font.pointSize: Theme.dpcm*0.4
                     anchors.left: parent.left
@@ -280,6 +295,8 @@ Window {
                 implicitHeight: Theme.dpcm*1.4
 
                 Label{
+                    id:vibrateOnTickLabel
+                    objectName: "vibrateOnTickLabel"
                     text: qsTr("Vibrate on tick:")
                     font.pointSize: Theme.dpcm*0.4
                     anchors.left: parent.left
@@ -299,6 +316,36 @@ Window {
                 }
 
             }
+
+            Rectangle{
+
+                id:groupLaguage
+                objectName: "groupLaguage"
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+                implicitWidth: Theme.dpcm*8
+                implicitHeight: Theme.dpcm*1.4
+
+                ComboBox {
+                    id:chooseLanguageBox
+                    objectName: "chooseLanguageBox"
+                    editable: false
+                    textRole: "key"
+                    model: ListModel {
+                        id:languageListModel
+                        objectName: "languageListModel"
+                        ListElement { key: "English"; value: "en" }
+                        ListElement { key: "Русский"; value: "ru" }
+                        ListElement { key: "Буряад"; value: "bua" }
+                    }
+                    onAccepted: {
+                        lang = languageListModel.get(currentIndex).value;
+                        setLanguage(lang);
+                    }
+                }
+
+            }
+
+
 
         }
 

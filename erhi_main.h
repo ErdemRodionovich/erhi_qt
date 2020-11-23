@@ -11,6 +11,7 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
+#include <QTranslator>
 
 class erhi_main : public QObject
 {
@@ -38,6 +39,7 @@ public slots:
     void onEngineCreated(QObject *obj, const QUrl &objUrl);
     void vibrate(qint32 duration);
     void closing(QQuickCloseEvent *closeEvent);
+    void setLanguage(QString lang);
 
 };
 

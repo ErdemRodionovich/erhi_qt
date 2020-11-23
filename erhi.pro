@@ -13,7 +13,6 @@ SOURCES += \
         main.cpp
 
 RESOURCES += qml.qrc \
-    qtquickcontrols2.conf \
     android/AndroidManifest.xml \
     android/build.gradle \
     android/gradle/wrapper/gradle-wrapper.jar \
@@ -24,8 +23,9 @@ RESOURCES += qml.qrc \
     android/src/org/gnaadan/AndroidExtras.java
 
 TRANSLATIONS += \
-    erhi_ru_RU.ts \
-    erhi_bua_BUA.ts
+    i18n/erhi_ru_RU.ts \
+    i18n/erhi_bua_BUA.ts \
+    i18n/erhi_en_UK.ts
 
 # Additional import path used to resolve QML modules in Qt Creator's code model
 QML_IMPORT_PATH = $$PWD/imports
@@ -47,9 +47,7 @@ DISTFILES += \
     android/gradlew \
     android/gradlew.bat \
     android/res/values/libs.xml \
-    android/src/org/gnaadan/AndroidExtras.java \
-    erhi_bua_BUA.ts \
-    qtquickcontrols2.conf
+    android/src/org/gnaadan/AndroidExtras.java
 
 contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
     ANDROID_PACKAGE_SOURCE_DIR = \

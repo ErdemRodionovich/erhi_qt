@@ -28,6 +28,14 @@ void erhi_main::onEngineCreated(QObject *obj, const QUrl &objUrl){
                      this,SLOT(closing(QQuickCloseEvent*)),
                      Qt::QueuedConnection);
 
+    QObject::connect(proot,SIGNAL(setLanguage(QString)),
+                     this,SLOT(setLanguage(QString)),
+                     Qt::QueuedConnection);
+
+    QObject::connect(proot,SIGNAL(setLanguage(QString)),
+                     this,SLOT(setLanguage(QString)),
+                     Qt::QueuedConnection);
+
     loadSettings();
 
 }
@@ -58,6 +66,14 @@ void erhi_main::loadSettings(){
             if(j.contains("vibrateOnTick") && j["vibrateOnTick"].isBool()){
                 proot->setProperty("vibrateOnTick", j["vibrateOnTick"].toBool());
             }
+            if(j.contains("lang") && j["lang"].isString()){
+
+                QString l = j["lang"].toString();
+                proot->setProperty("lang", l);
+
+                setLanguage(l);
+
+            }
 
             qDebug()<<"settings loaded";
 
@@ -76,6 +92,7 @@ void erhi_main::saveSettings(){
         j["ticksPerCircle"]=proot->property("ticksPerCircle").toInt();
         j["circleCount"]=proot->property("circleCount").toInt();
         j["vibrateOnTick"]=proot->property("vibrateOnTick").toBool();
+        j["lang"]=proot->property("lang").toBool();
 
         QJsonDocument sdoc(j);
         f.write(sdoc.toJson());
@@ -93,5 +110,26 @@ void erhi_main::closing(QQuickCloseEvent *closeEvent){
 
     saveSettings();
     qDebug()<<"close !";
+
+}
+
+void erhi_main::setLanguage(QString lang){
+
+    QTranslator translator;
+    if (lang == "ru") {
+        translator.load("qrc:/i18n/erhi_ru_RU.qm",".");
+    }else if (lang == "bua") {
+        translator.load("qrc:/i18n/erhi_bua_BUA.qm",".");
+    }else {
+        translator.load("qrc:/i18n/erhi_en_UK.qm",".");
+    }
+
+    app->installTranslator(&translator);
+
+    QVariant rV;
+    QMetaObject::invokeMethod(proot,
+                              "updateTexts",
+                              Qt::QueuedConnection,
+                              Q_RETURN_ARG(QVariant,rV));
 
 }
