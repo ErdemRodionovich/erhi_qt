@@ -32,6 +32,8 @@ public:
     void loadSettings();
     void saveSettings();
 
+    //bool event(QEvent* pe);
+
 signals:
 
 

@@ -9,15 +9,35 @@
     </message>
     <message>
         <source>Ticks per circle:</source>
-        <translation>Circle length</translation>
+        <translation type="vanished">Circle length</translation>
     </message>
     <message>
         <source>Circle count:</source>
-        <translation>Number of circles</translation>
+        <translation type="vanished">Number of circles</translation>
     </message>
     <message>
         <source>Vibrate on tick:</source>
-        <translation>Vibrate when click</translation>
+        <translation type="vanished">Vibrate when click</translation>
+    </message>
+    <message>
+        <source>Language:</source>
+        <translation type="vanished">Language</translation>
+    </message>
+    <message>
+        <source>Ticks per circle</source>
+        <translation>Circle length</translation>
+    </message>
+    <message>
+        <source>Circle count</source>
+        <translation>Number of circles</translation>
+    </message>
+    <message>
+        <source>Vibrate on tick</source>
+        <translation>Vibrate on click</translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation>Language</translation>
     </message>
 </context>
 </TS>

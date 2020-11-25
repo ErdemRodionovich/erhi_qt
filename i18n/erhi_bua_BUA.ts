@@ -9,15 +9,35 @@
     </message>
     <message>
         <source>Ticks per circle:</source>
-        <translation>Нэгэ таталгын тоо</translation>
+        <translation type="vanished">Нэгэ таталгын тоо</translation>
     </message>
     <message>
         <source>Circle count:</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Хэды дахин татаха</translation>
     </message>
     <message>
         <source>Vibrate on tick:</source>
-        <translation type="unfinished"></translation>
+        <translation type="vanished">Дорьбодхо татахадаа</translation>
+    </message>
+    <message>
+        <source>Language:</source>
+        <translation type="vanished">Хэлэн</translation>
+    </message>
+    <message>
+        <source>Ticks per circle</source>
+        <translation>Нэгэ таталгын тоо</translation>
+    </message>
+    <message>
+        <source>Circle count</source>
+        <translation>Хэды дахин татаха</translation>
+    </message>
+    <message>
+        <source>Vibrate on tick</source>
+        <translation>Дорьбодхо татахадаа</translation>
+    </message>
+    <message>
+        <source>Language</source>
+        <translation>Хэлэн</translation>
     </message>
 </context>
 </TS>

@@ -58,9 +58,9 @@ Window {
     function updateTexts(){
 
         mainWindow.title = qsTr("Erhi");
-        ticksPerCircleLabel.text = qsTr("Ticks per circle:");
-        circleCountLabel.text = qsTr("Circle count:");
-        vibrateOnTickLabel.text = qsTr("Vibrate on tick:");
+        ticksPerCircleLabel.text = qsTr("Ticks per circle");
+        circleCountLabel.text = qsTr("Circle count");
+        vibrateOnTickLabel.text = qsTr("Vibrate on tick");
 
     }
 
@@ -88,7 +88,19 @@ Window {
             }
             MouseArea{
                 anchors.fill: parent
-                onClicked: menu.visible = true
+                onClicked:{
+                    menu.visible = true
+                    for(var i_index=0;i_index<languageListModel.count;i_index++){
+
+                        if(lang == languageListModel.get(i_index).value){
+
+                            chooseLanguageBox.currentIndex = i_index;
+                            break;
+
+                        }
+
+                    }
+                }
             }
         }
 
@@ -204,33 +216,34 @@ Window {
 
         }
 
-        ColumnLayout{
+        GridLayout{
 
             id:settingsColumn
             objectName: "settingsColumn"
-            spacing: Theme.dpcm*0.1
+            columns: 2
+            rowSpacing: Theme.dpcm*0.1
 
             anchors.top: menuExitButton.bottom
             anchors.left: parent.left
             anchors.right: parent.right
             //anchors.bottom: parent.bottom
 
-            Rectangle{
+//            Rectangle{
 
-                id:groupTicksPerCircle
-                objectName: "groupTicksPerCircle"
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-                implicitWidth: Theme.dpcm*8
-                implicitHeight: Theme.dpcm*1.4
+//                id:groupTicksPerCircle
+//                objectName: "groupTicksPerCircle"
+//                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+//                implicitWidth: Theme.dpcm*8
+//                implicitHeight: Theme.dpcm*1.4
 
 
                 Label{
                     id:ticksPerCircleLabel
                     objectName: "ticksPerCircleLabel"
-                    text: qsTr("Ticks per circle:")
+                    text: qsTr("Ticks per circle")
                     font.pointSize: Theme.dpcm*0.4
                     anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
+                    //anchors.verticalCenter: parent.verticalCenter
                     anchors.leftMargin: Theme.dpcm*0.2
                 }
 
@@ -240,8 +253,9 @@ Window {
                     from: 1
                     to: 999999999
                     value: ticksPerCircle
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
+                    //anchors.right: parent.right
+                    //anchors.verticalCenter: parent.verticalCenter
+                    Layout.alignment: Qt.AlignCenter
                     onValueModified: {
                         ticksPerCircle = value
                     }
@@ -249,24 +263,24 @@ Window {
                 }
 
 
-            }
+//            }
 
-            Rectangle{
+//            Rectangle{
 
-                id:groupCircleCount
-                objectName: "groupCircleCount"
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-                implicitWidth: Theme.dpcm*8
-                implicitHeight: Theme.dpcm*1.4
+//                id:groupCircleCount
+//                objectName: "groupCircleCount"
+//                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+//                implicitWidth: Theme.dpcm*8
+//                implicitHeight: Theme.dpcm*1.4
 
 
                 Label{
                     id:circleCountLabel
                     objectName: "circleCountLabel"
-                    text: qsTr("Circle count:")
+                    text: qsTr("Circle count")
                     font.pointSize: Theme.dpcm*0.4
                     anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
+                    //anchors.verticalCenter: parent.verticalCenter
                     anchors.leftMargin: Theme.dpcm*0.2
                 }
 
@@ -276,38 +290,40 @@ Window {
                     from: 1
                     to: 999999999
                     value: circleCount
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
+                    //anchors.right: parent.right
+                    //anchors.verticalCenter: parent.verticalCenter
+                    Layout.alignment: Qt.AlignCenter
                     onValueModified: {
                         circleCount = value
                     }
 
                 }
 
-            }
+//            }
 
-            Rectangle{
+//            Rectangle{
 
-                id:groupVibrateOnTick
-                objectName: "groupVibrateOnTick"
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-                implicitWidth: Theme.dpcm*8
-                implicitHeight: Theme.dpcm*1.4
+//                id:groupVibrateOnTick
+//                objectName: "groupVibrateOnTick"
+//                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+//                implicitWidth: Theme.dpcm*8
+//                implicitHeight: Theme.dpcm*1.4
 
                 Label{
                     id:vibrateOnTickLabel
                     objectName: "vibrateOnTickLabel"
-                    text: qsTr("Vibrate on tick:")
+                    text: qsTr("Vibrate on tick")
                     font.pointSize: Theme.dpcm*0.4
                     anchors.left: parent.left
-                    anchors.verticalCenter: parent.verticalCenter
+                    //anchors.verticalCenter: parent.verticalCenter
                     anchors.leftMargin: Theme.dpcm*0.2
                 }
 
                 Switch{
 
-                    anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
+                    //anchors.right: parent.right
+                    //anchors.verticalCenter: parent.verticalCenter
+                    Layout.alignment: Qt.AlignCenter
                     checked: vibrateOnTick
                     onCheckedChanged: {
                         vibrateOnTick = checked
@@ -315,19 +331,32 @@ Window {
 
                 }
 
-            }
+//            }
 
-            Rectangle{
+//            Rectangle{
 
-                id:groupLaguage
-                objectName: "groupLaguage"
-                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-                implicitWidth: Theme.dpcm*8
-                implicitHeight: Theme.dpcm*1.4
+//                id:groupLaguage
+//                objectName: "groupLaguage"
+//                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
+//                implicitWidth: Theme.dpcm*8
+//                implicitHeight: Theme.dpcm*1.4
+
+                Label{
+                    id:languageChooseLabel
+                    objectName: "languageChooseLabel"
+                    text: qsTr("Language")
+                    font.pointSize: Theme.dpcm*0.4
+                    anchors.left: parent.left
+                    //anchors.verticalCenter: parent.verticalCenter
+                    anchors.leftMargin: Theme.dpcm*0.2
+                }
 
                 ComboBox {
                     id:chooseLanguageBox
                     objectName: "chooseLanguageBox"
+                    //anchors.right: parent.right
+                    //anchors.verticalCenter: parent.verticalCenter
+                    Layout.alignment: Qt.AlignCenter
                     editable: false
                     textRole: "key"
                     model: ListModel {
@@ -337,155 +366,18 @@ Window {
                         ListElement { key: "Русский"; value: "ru" }
                         ListElement { key: "Буряад"; value: "bua" }
                     }
-                    onAccepted: {
+                    onActivated: {
                         lang = languageListModel.get(currentIndex).value;
                         setLanguage(lang);
                     }
                 }
 
-            }
+            //}
 
 
 
         }
 
     }
-
-
-/*
-    Rectangle{
-        id: menu
-        objectName: "menu"
-        visible: false
-        x:0
-        y:0
-        width: parent.width
-        height: parent.height
-
-        Image {
-            id: menu_button_in_menu
-            objectName: "menu_button_in_menu"
-            anchors.left: parent.left
-            anchors.top: parent.top
-            anchors.margins: 8
-            height: Theme.dpcm*1
-            //width: 44
-            source: "tri tochki 1000.png"
-            fillMode: Image.PreserveAspectFit
-            MouseArea{
-                anchors.fill: parent
-                onClicked: {
-                    menu.visible = false
-                    ticksPerCircle_Edit.focus = false
-                    circleCount_Edit.focus = false
-                }
-            }
-        }
-
-        Rectangle{
-
-            id:ticksPerCircle_Edit_Group
-            objectName: "ticksPerCircle_Edit_Group"
-            anchors.top: menu_button_in_menu.bottom
-            anchors.left: parent.left
-            anchors.right: parent.right
-            height: 30
-
-            Text{
-
-                id:ticksPerCircle_Edit_Label
-                objectName: "ticksPerCircle_Edit_Label"
-                anchors.top: parent.top
-                anchors.left: parent.left
-                text: qsTr("Ticks per circle:")
-                font.pointSize: 20
-                font.family: "Arial"
-
-            }
-
-            TextInput{
-
-                id:ticksPerCircle_Edit
-                objectName: "ticksPerCircle_Edit"
-
-                anchors.left: ticksPerCircle_Edit_Label.right
-                //anchors.right: parent.right
-                anchors.top: parent.top
-                font.pointSize: 20
-                inputMask: "999999"
-                text: ticksPerCircle
-                onTextEdited: {
-                    if(text == 0){
-                        text = 1
-                    }
-                    ticksPerCircle = text
-                }
-
-            }
-
-            SpinBox{
-
-                id:ticksPerCircle_Edit_SpinBox
-                objectName: "ticksPerCircle_Edit_SpinBox"
-                from:1
-                value: ticksPerCircle
-                to:999
-                stepSize: 1
-                anchors.left: ticksPerCircle_Edit.right
-                anchors.top: parent.top
-
-
-            }
-
-
-        }
-
-        Rectangle{
-
-            id:circleCount_Edit_Group
-            objectName: "circleCount_Edit_Group"
-            anchors.top: ticksPerCircle_Edit_Group.bottom
-            anchors.left: parent.left
-            anchors.right: parent.right
-
-            Text {
-                id: circleCount_Edit_Label
-                objectName: "circleCount_Edit_Label"
-                text: qsTr("Circle count:")
-                font.pointSize: 20
-                font.family: "Arial"
-                anchors.top: parent.top
-                anchors.left: parent.left
-            }
-
-            TextInput{
-
-                id:circleCount_Edit
-                objectName: "circleCount_Edit"
-                inputMask: "999999"
-                text: circleCount
-                font.pointSize: 20
-                font.family: "Arial"
-                anchors.left: circleCount_Edit_Label.right
-                anchors.top: parent.top
-                anchors.right: parent.right
-                onTextEdited: {
-                    if(text == 0){
-                        text = 1
-                    }
-                    circleCount = text
-                }
-
-            }
-
-        }
-
-        Button{
-            id: up_But_Test
-            objectName: "up_But_Test"
-            text: qsTr("Update")
-        }
-
-    }*/
 
 }

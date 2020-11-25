@@ -78,6 +78,10 @@ void erhi_main::loadSettings(){
             qDebug()<<"settings loaded";
 
         }
+    }else{
+
+        setLanguage(QLocale::system().name());
+
     }
 
 }
@@ -92,7 +96,7 @@ void erhi_main::saveSettings(){
         j["ticksPerCircle"]=proot->property("ticksPerCircle").toInt();
         j["circleCount"]=proot->property("circleCount").toInt();
         j["vibrateOnTick"]=proot->property("vibrateOnTick").toBool();
-        j["lang"]=proot->property("lang").toBool();
+        j["lang"]=proot->property("lang").toString();
 
         QJsonDocument sdoc(j);
         f.write(sdoc.toJson());
@@ -116,20 +120,52 @@ void erhi_main::closing(QQuickCloseEvent *closeEvent){
 void erhi_main::setLanguage(QString lang){
 
     QTranslator translator;
+    bool fileOfTranslationLoaded = false;
     if (lang == "ru") {
-        translator.load("qrc:/i18n/erhi_ru_RU.qm",".");
+        fileOfTranslationLoaded = translator.load(":/i18n/erhi_ru_RU.qm");
     }else if (lang == "bua") {
-        translator.load("qrc:/i18n/erhi_bua_BUA.qm",".");
+        fileOfTranslationLoaded = translator.load(":/i18n/erhi_bua_BUA.qm");
     }else {
-        translator.load("qrc:/i18n/erhi_en_UK.qm",".");
+        fileOfTranslationLoaded = translator.load(":/i18n/erhi_en_UK.qm");
     }
 
-    app->installTranslator(&translator);
+    if(!fileOfTranslationLoaded){
+        qDebug()<<"file of translation NOT loaded!";
+    }else{
 
-    QVariant rV;
-    QMetaObject::invokeMethod(proot,
-                              "updateTexts",
-                              Qt::QueuedConnection,
-                              Q_RETURN_ARG(QVariant,rV));
+        if(app->installTranslator(&translator)){
+
+            engine->retranslate();
+            qDebug()<<"install translator successfully!";
+
+        }else {
+            qDebug()<<"NOT install translator!!!";
+        }
+
+    }
+
+//    QVariant rV;
+//    QMetaObject::invokeMethod(proot,
+//                              "updateTexts",
+//                              Qt::QueuedConnection);
+
+    qDebug()<<"setLanguage end";
 
 }
+
+//bool erhi_main::event(QEvent *pe){
+
+//    if(pe->type() == QEvent::LanguageChange){
+
+//        QMetaObject::invokeMethod(proot,
+//                                  "updateTexts",
+//                                  Qt::QueuedConnection);
+//        qDebug()<<"update texts from event!";
+
+//        return true;
+
+//    }
+
+//    return QWidget::event(pe);
+
+//}
