@@ -46,14 +46,14 @@ QtObject {
     property font font
     font.bold: false
     font.underline: false
-    font.pixelSize: dpcm*0.6
+    font.pointSize: 16
     font.family: "arial"
     //font.color: "#000000"
 
     property font font_small
     font_small.bold: false
     font_small.underline: false
-    font_small.pixelSize: dpcm*0.3
+    font_small.pointSize: 12
     font_small.family: "arial"
     //font_small.color: "#000000"
 

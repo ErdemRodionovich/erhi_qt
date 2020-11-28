@@ -66,6 +66,21 @@ void erhi_main::loadSettings(){
             if(j.contains("vibrateOnTick") && j["vibrateOnTick"].isBool()){
                 proot->setProperty("vibrateOnTick", j["vibrateOnTick"].toBool());
             }
+            if(j.contains("vibrateOnCircle") && j["vibrateOnCircle"].isBool()){
+                proot->setProperty("vibrateOnCircle", j["vibrateOnCircle"].toBool());
+            }
+            if(j.contains("soundOnTick") && j["soundOnTick"].isBool()){
+                proot->setProperty("soundOnTick", j["soundOnTick"].toBool());
+            }
+            if(j.contains("soundOnCircle") && j["soundOnCircle"].isBool()){
+                proot->setProperty("soundOnCircle", j["soundOnCircle"].toBool());
+            }
+            if(j.contains("soundNumberOnCircle") && j["soundNumberOnCircle"].isDouble()){
+                proot->setProperty("soundNumberOnCircle", j["soundNumberOnCircle"].toInt());
+            }
+            if(j.contains("soundNumberOnTick") && j["soundNumberOnTick"].isDouble()){
+                proot->setProperty("soundNumberOnTick", j["soundNumberOnTick"].toInt());
+            }
             if(j.contains("lang") && j["lang"].isString()){
 
                 QString l = j["lang"].toString();
@@ -84,6 +99,16 @@ void erhi_main::loadSettings(){
 
     }
 
+    qreal dpi = app->primaryScreen()->physicalDotsPerInch();
+    qreal dpcm = dpi/2.54;
+
+    QMetaObject::invokeMethod(proot,
+                              "set_dpcm",
+                              Qt::QueuedConnection,
+                              Q_ARG(QVariant,dpcm));
+
+    qDebug()<<"dpi="<<dpi<<" dpcm="<<dpcm;
+
 }
 
 void erhi_main::saveSettings(){
@@ -96,6 +121,11 @@ void erhi_main::saveSettings(){
         j["ticksPerCircle"]=proot->property("ticksPerCircle").toInt();
         j["circleCount"]=proot->property("circleCount").toInt();
         j["vibrateOnTick"]=proot->property("vibrateOnTick").toBool();
+        j["soundOnTick"]=proot->property("soundOnTick").toBool();
+        j["vibrateOnCircle"]=proot->property("vibrateOnCircle").toBool();
+        j["soundOnCircle"]=proot->property("soundOnCircle").toBool();
+        j["soundNumberOnTick"]=proot->property("soundNumberOnTick").toInt();
+        j["soundNumberOnCircle"]=proot->property("soundNumberOnCircle").toInt();
         j["lang"]=proot->property("lang").toString();
 
         QJsonDocument sdoc(j);
@@ -144,28 +174,6 @@ void erhi_main::setLanguage(QString lang){
 
     }
 
-//    QVariant rV;
-//    QMetaObject::invokeMethod(proot,
-//                              "updateTexts",
-//                              Qt::QueuedConnection);
-
     qDebug()<<"setLanguage end";
 
 }
-
-//bool erhi_main::event(QEvent *pe){
-
-//    if(pe->type() == QEvent::LanguageChange){
-
-//        QMetaObject::invokeMethod(proot,
-//                                  "updateTexts",
-//                                  Qt::QueuedConnection);
-//        qDebug()<<"update texts from event!";
-
-//        return true;
-
-//    }
-
-//    return QWidget::event(pe);
-
-//}

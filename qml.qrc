@@ -15,7 +15,6 @@
         <file>sounds/relaxing-bell-ding-sound.mp3</file>
         <file>sounds/Magical-chimes-bells-down-sound-effect.mp3</file>
         <file>sounds/Magical-chimes-bells-up-sound-effect.mp3</file>
-        <file>sounds/160052__jorickhoofd__metal-short-tick.aiff</file>
         <file>i18n/erhi_bua_BUA.ts</file>
         <file>i18n/erhi_ru_RU.ts</file>
         <file>qtquickcontrols2.conf</file>
@@ -23,5 +22,6 @@
         <file>i18n/erhi_ru_RU.qm</file>
         <file>i18n/erhi_en_UK.ts</file>
         <file>i18n/erhi_en_UK.qm</file>
+        <file>sounds/160052__jorickhoofd__metal-short-tick.mp3</file>
     </qresource>
 </RCC>

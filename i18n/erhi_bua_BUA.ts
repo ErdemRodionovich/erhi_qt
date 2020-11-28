@@ -39,5 +39,41 @@
         <source>Language</source>
         <translation>Хэлэн</translation>
     </message>
+    <message>
+        <source>Metal short</source>
+        <translation>Тук</translation>
+    </message>
+    <message>
+        <source>Bell ding</source>
+        <translation>Хонхо 1</translation>
+    </message>
+    <message>
+        <source>Ding</source>
+        <translation>Хонхо 2</translation>
+    </message>
+    <message>
+        <source>Bells down</source>
+        <translation>Олон хонхо 1</translation>
+    </message>
+    <message>
+        <source>Bells up</source>
+        <translation>Олон хонхо 2</translation>
+    </message>
+    <message>
+        <source>Play sound on tick</source>
+        <translation>Татахада абяа гаргаха</translation>
+    </message>
+    <message>
+        <source>Sound on tick</source>
+        <translation>Татаhани абяан</translation>
+    </message>
+    <message>
+        <source>Play sound on circle</source>
+        <translation>Нэгэ таталгын дүүрхэдэ абяа гаргаха</translation>
+    </message>
+    <message>
+        <source>Sound on circle</source>
+        <translation>Нэгэ таталгын дүүрhэни абяан</translation>
+    </message>
 </context>
 </TS>

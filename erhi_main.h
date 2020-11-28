@@ -12,6 +12,7 @@
 #include <QQmlApplicationEngine>
 #include <QQuickWindow>
 #include <QTranslator>
+#include <QScreen>
 
 class erhi_main : public QObject
 {

@@ -3,6 +3,7 @@ import QtQuick.Window 2.12
 import QtQuick.Controls 2.5
 import QtQuick.Layouts 1.12
 import Theme 1.0
+import QtMultimedia 5.12
 
 
 Window {
@@ -22,7 +23,7 @@ Window {
     property int ticksPerCircle: 10
     property int soundNumberOnTick: 0
     property bool soundOnTick: true
-    property int sounndNumberOnCircle: 0
+    property int soundNumberOnCircle: 0
     property bool soundOnCircle: true
     property bool vibrateOnTick: true
     property bool vibrateOnCircle: true
@@ -31,27 +32,35 @@ Window {
     function onTick(){
 
         curTicks++;
+
+        if (vibrateOnTick){
+            vibrate(100);
+        }
+
+        if(soundOnTick){
+            snd.pl(soundNumberOnTick);
+        }
+
         if(curTicks >= ticksPerCircle){
 
             curCircles++;
             curTicks=0;
 
             if(curCircles >= circleCount){
-
                 curCircles=0;
-
             }
 
-            vibrate(1000);
+            if(vibrateOnCircle){
+                vibrate(1000);
+            }
+            if(soundOnCircle){
+                snd.pl(soundNumberOnCircle);
+            }
 
         }
 
         curCount_Txt.text = curTicks;
         curCircle_Txt.text = curCircles;
-
-        if (vibrateOnTick){
-            vibrate(100);
-        }
 
     }
 
@@ -64,13 +73,49 @@ Window {
 
     }
 
+    function set_dpcm(d){
+        Theme.dpcm = d;
+    }
+
+    Audio{
+        id:snd
+        objectName: "snd"
+        playlist: Playlist{
+            id: snd_plst
+            objectName: "snd_plst"
+            playbackMode: Playlist.CurrentItemOnce;
+            PlaylistItem{source: "sounds/160052__jorickhoofd__metal-short-tick.mp3";}
+            PlaylistItem{source: "sounds/relaxing-bell-ding-sound.mp3";}
+            PlaylistItem{source: "sounds/Ding-sound-effect.mp3";}
+            PlaylistItem{source: "sounds/Magical-chimes-bells-down-sound-effect.mp3";}
+            PlaylistItem{source: "sounds/Magical-chimes-bells-up-sound-effect.mp3";}
+        }
+        volume: 1.0
+        function pl(i){
+            if(snd.playbackState == Audio.PlayingState){
+                snd.stop();
+            }
+            snd_plst.currentIndex = i;
+            snd.play();
+        }
+    }
+    ListModel{
+        id:snd_lst
+        objectName: "snd_lst"
+        ListElement{key:"Metal short"; text:qsTr("Metal short"); value:0;}
+        ListElement{key:"Bell ding"; text:qsTr("Bell ding"); value:1;}
+        ListElement{key:"Ding"; text:qsTr("Ding"); value:2;}
+        ListElement{key:"Bells down"; text:qsTr("Bells down"); value:3;}
+        ListElement{key:"Bells up"; text:qsTr("Bells up"); value:4;}
+    }
+
     Rectangle {
         id: footer
         objectName: "footer"
         x: 0
         y: 0
         width: parent.width
-        height: Theme.dpcm*1
+        height: Theme.dpcm
         color: Theme.osnFon
 
         Rectangle {
@@ -79,7 +124,7 @@ Window {
             anchors.left: footer.left
             anchors.top: footer.top
             anchors.bottom: footer.bottom
-            width: Theme.dpcm*1.5
+            width: Theme.dpcm
             Image{
                 source: "tri tochki 1000.png"
                 fillMode: Image.PreserveAspectFit
@@ -91,14 +136,20 @@ Window {
                 onClicked:{
                     menu.visible = true
                     for(var i_index=0;i_index<languageListModel.count;i_index++){
-
                         if(lang == languageListModel.get(i_index).value){
-
                             chooseLanguageBox.currentIndex = i_index;
                             break;
-
                         }
-
+                    }
+                    for(var i=0;i<snd_lst.count;i++){
+                        if(soundNumberOnCircle == i){
+                            soundNumberOnCircleChooseBox.currentIndex = i;
+                            soundNumberOnCircleChooseBox.displayText = snd_lst.get(i).text; //qsTr(soundNumberOnCircleChooseBox.currentText);
+                        }
+                        if(soundNumberOnTick == i){
+                            soundOnTickChooseBox.currentIndex = i;
+                            soundOnTickChooseBox.displayText = snd_lst.get(i).text; //qsTr(soundOnTickChooseBox.currentText);
+                        }
                     }
                 }
             }
@@ -112,7 +163,7 @@ Window {
             anchors.bottom: footer.bottom
             anchors.right: footer.right
             anchors.margins: 4
-            width: Theme.dpcm*1.2
+            width: Theme.dpcm
             fillMode: Image.PreserveAspectFit
             MouseArea{
                 anchors.fill: parent
@@ -191,8 +242,8 @@ Window {
             anchors.top: parent.top
             anchors.left: parent.left
             //anchors.right: parent.right
-            height: Theme.dpcm*1
-            width: Theme.dpcm*1.5
+            height: Theme.dpcm
+            width: Theme.dpcm
 
             Image {
                 id: menuExitImage
@@ -226,155 +277,223 @@ Window {
             anchors.top: menuExitButton.bottom
             anchors.left: parent.left
             anchors.right: parent.right
-            //anchors.bottom: parent.bottom
+            Layout.alignment: Qt.AlignLeft
+            property real c2_width: Theme.dpcm*2.5
+            property real c2_height: Theme.dpcm*1.5
+            property real c1_width: Theme.dpcm*3
+            property real c1_height: Theme.dpcm*1.5
+            property real c1_leftMargin: Theme.dpcm*0.2
 
-//            Rectangle{
+            Text{
+                id:ticksPerCircleLabel
+                objectName: "ticksPerCircleLabel"
+                width: parent.c1_width
+                text: qsTr("Ticks per circle")
+                wrapMode: Text.Word
+                Layout.leftMargin: parent.c1_leftMargin
+                font: Theme.font
+                Layout.maximumWidth: parent.c1_width
+            }
 
-//                id:groupTicksPerCircle
-//                objectName: "groupTicksPerCircle"
-//                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-//                implicitWidth: Theme.dpcm*8
-//                implicitHeight: Theme.dpcm*1.4
+            SpinBox{
 
-
-                Label{
-                    id:ticksPerCircleLabel
-                    objectName: "ticksPerCircleLabel"
-                    text: qsTr("Ticks per circle")
-                    font.pointSize: Theme.dpcm*0.4
-                    anchors.left: parent.left
-                    //anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: Theme.dpcm*0.2
+                editable: true
+                from: 1
+                to: 999999999
+                value: ticksPerCircle
+                Layout.alignment: Qt.AlignCenter
+                //implicitHeight: parent.c2_height
+                implicitWidth: parent.c2_width
+                font: Theme.font
+                onValueModified: {
+                    ticksPerCircle = value
                 }
 
-                SpinBox{
+            }
 
-                    editable: true
-                    from: 1
-                    to: 999999999
-                    value: ticksPerCircle
-                    //anchors.right: parent.right
-                    //anchors.verticalCenter: parent.verticalCenter
-                    Layout.alignment: Qt.AlignCenter
-                    onValueModified: {
-                        ticksPerCircle = value
-                    }
+            Text{
+                id:circleCountLabel
+                objectName: "circleCountLabel"
+                text: qsTr("Circle count")
+                width: parent.c1_width
+                padding: 0
+                wrapMode: Text.WordWrap
+                Layout.leftMargin: parent.c1_leftMargin
+                font: Theme.font
+                Layout.maximumWidth: parent.c1_width
+            }
 
+            SpinBox{
+
+                editable: true
+                from: 1
+                to: 999999999
+                value: circleCount
+                Layout.alignment: Qt.AlignCenter
+                font: Theme.font
+                implicitWidth: parent.c2_width
+                onValueModified: {
+                    circleCount = value
                 }
 
+            }
 
-//            }
+            Text{
+                id:vibrateOnTickLabel
+                objectName: "vibrateOnTickLabel"
+                text: qsTr("Vibrate on tick")
+                width: parent.c1_width
+                Layout.maximumWidth: parent.c1_width
+                padding: 0
+                wrapMode: Text.WordWrap
+                Layout.leftMargin: parent.c1_leftMargin
+                font: Theme.font
+            }
 
-//            Rectangle{
+            Switch{
 
-//                id:groupCircleCount
-//                objectName: "groupCircleCount"
-//                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-//                implicitWidth: Theme.dpcm*8
-//                implicitHeight: Theme.dpcm*1.4
-
-
-                Label{
-                    id:circleCountLabel
-                    objectName: "circleCountLabel"
-                    text: qsTr("Circle count")
-                    font.pointSize: Theme.dpcm*0.4
-                    anchors.left: parent.left
-                    //anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: Theme.dpcm*0.2
+                Layout.alignment: Qt.AlignCenter
+                checked: vibrateOnTick
+                font: Theme.font
+                implicitWidth: parent.c2_width
+                onCheckedChanged: {
+                    vibrateOnTick = checked
                 }
 
-                SpinBox{
+            }
 
-                    editable: true
-                    from: 1
-                    to: 999999999
-                    value: circleCount
-                    //anchors.right: parent.right
-                    //anchors.verticalCenter: parent.verticalCenter
-                    Layout.alignment: Qt.AlignCenter
-                    onValueModified: {
-                        circleCount = value
-                    }
+            Text{
+                id:languageChooseLabel
+                objectName: "languageChooseLabel"
+                text: qsTr("Language")
+                width: parent.c1_width
+                padding: 0
+                wrapMode: Text.WordWrap
+                Layout.leftMargin: parent.c1_leftMargin
+                font: Theme.font
+                Layout.maximumWidth: parent.c1_width
+            }
 
+            ComboBox {
+                id:chooseLanguageBox
+                objectName: "chooseLanguageBox"
+                Layout.alignment: Qt.AlignCenter
+                implicitWidth: parent.c2_width
+                editable: false
+                textRole: "key"
+                font: Theme.font
+                model: ListModel {
+                    id:languageListModel
+                    objectName: "languageListModel"
+                    ListElement { key: "English"; value: "en" }
+                    ListElement { key: "Русский"; value: "ru" }
+                    ListElement { key: "Буряад"; value: "bua" }
+                }
+                onActivated: {
+                    lang = languageListModel.get(currentIndex).value;
+                    setLanguage(lang);
+                }
+            }
+
+            Text{
+                id:playSoundOnTickLabel
+                objectName: "playSoundOnTickLabel"
+                text: qsTr("Play sound on tick")
+                width: parent.c1_width
+                wrapMode: Text.WordWrap
+                Layout.leftMargin: parent.c1_leftMargin
+                font: Theme.font
+                Layout.maximumWidth: parent.c1_width
+            }
+
+            Switch{
+
+                Layout.alignment: Qt.AlignCenter
+                checked: soundOnTick
+                font: Theme.font
+                implicitWidth: parent.c2_width
+                onCheckedChanged: {
+                    soundOnTick = checked
                 }
 
-//            }
+            }
 
-//            Rectangle{
+            Text{
+                id:soundNumberOnTickLabel
+                objectName: "soundNumberOnTickLabel"
+                text: qsTr("Sound on tick");
+                width: parent.c1_width
+                wrapMode: Text.Wrap
+                Layout.leftMargin: parent.c1_leftMargin
+                font: Theme.font
+                Layout.maximumWidth: parent.c1_width
+            }
 
-//                id:groupVibrateOnTick
-//                objectName: "groupVibrateOnTick"
-//                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-//                implicitWidth: Theme.dpcm*8
-//                implicitHeight: Theme.dpcm*1.4
+            ComboBox{
+                id:soundOnTickChooseBox
+                objectName: "soundOnTickChooseBox"
+                Layout.alignment: Qt.AlignCenter
+                implicitWidth: parent.c2_width
+                editable: false;
+                textRole: "text"
+                font: Theme.font
+                model: snd_lst
+                displayText: qsTr(currentText)
+                onActivated: {
+                    soundNumberOnTick = currentIndex
+                    snd.pl(soundNumberOnTick);
+                }
+            }
 
-                Label{
-                    id:vibrateOnTickLabel
-                    objectName: "vibrateOnTickLabel"
-                    text: qsTr("Vibrate on tick")
-                    font.pointSize: Theme.dpcm*0.4
-                    anchors.left: parent.left
-                    //anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: Theme.dpcm*0.2
+            Text{
+                id:playSoundOnCircleLabel
+                objectName: "playSoundOnCircleLabel"
+                text: qsTr("Play sound on circle")
+                width: parent.c1_width
+                wrapMode: Text.WordWrap
+                Layout.leftMargin: parent.c1_leftMargin
+                font: Theme.font
+                Layout.maximumWidth: parent.c1_width
+            }
+
+            Switch{
+
+                Layout.alignment: Qt.AlignCenter
+                checked: soundOnCircle
+                font: Theme.font
+                implicitWidth: parent.c2_width
+                onCheckedChanged: {
+                    soundOnCircle = checked
                 }
 
-                Switch{
+            }
 
-                    //anchors.right: parent.right
-                    //anchors.verticalCenter: parent.verticalCenter
-                    Layout.alignment: Qt.AlignCenter
-                    checked: vibrateOnTick
-                    onCheckedChanged: {
-                        vibrateOnTick = checked
-                    }
+            Text{
+                id:soundNumberOnCircleLabel
+                objectName: "soundNumberOnCircleLabel"
+                text: qsTr("Sound on circle");
+                width: parent.c1_width
+                wrapMode: Text.Wrap
+                Layout.leftMargin: parent.c1_leftMargin
+                font: Theme.font
+                Layout.maximumWidth: parent.c1_width
+            }
 
+            ComboBox{
+                id:soundNumberOnCircleChooseBox
+                objectName: "soundNumberOnCircleChooseBox"
+                Layout.alignment: Qt.AlignCenter
+                implicitWidth: parent.c2_width
+                editable: false;
+                textRole: "text"
+                font: Theme.font
+                model: snd_lst
+                displayText: qsTr(currentText)
+                onActivated: {
+                    soundNumberOnCircle = currentIndex
+                    snd.pl(soundNumberOnCircle);
                 }
-
-//            }
-
-//            Rectangle{
-
-//                id:groupLaguage
-//                objectName: "groupLaguage"
-//                Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
-//                implicitWidth: Theme.dpcm*8
-//                implicitHeight: Theme.dpcm*1.4
-
-                Label{
-                    id:languageChooseLabel
-                    objectName: "languageChooseLabel"
-                    text: qsTr("Language")
-                    font.pointSize: Theme.dpcm*0.4
-                    anchors.left: parent.left
-                    //anchors.verticalCenter: parent.verticalCenter
-                    anchors.leftMargin: Theme.dpcm*0.2
-                }
-
-                ComboBox {
-                    id:chooseLanguageBox
-                    objectName: "chooseLanguageBox"
-                    //anchors.right: parent.right
-                    //anchors.verticalCenter: parent.verticalCenter
-                    Layout.alignment: Qt.AlignCenter
-                    editable: false
-                    textRole: "key"
-                    model: ListModel {
-                        id:languageListModel
-                        objectName: "languageListModel"
-                        ListElement { key: "English"; value: "en" }
-                        ListElement { key: "Русский"; value: "ru" }
-                        ListElement { key: "Буряад"; value: "bua" }
-                    }
-                    onActivated: {
-                        lang = languageListModel.get(currentIndex).value;
-                        setLanguage(lang);
-                    }
-                }
-
-            //}
-
-
+            }
 
         }
 
