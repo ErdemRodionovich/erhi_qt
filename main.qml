@@ -66,10 +66,30 @@ Window {
 
     function updateTexts(){
 
-        mainWindow.title = qsTr("Erhi");
+        /*mainWindow.title = qsTr("Erhi");
         ticksPerCircleLabel.text = qsTr("Ticks per circle");
         circleCountLabel.text = qsTr("Circle count");
-        vibrateOnTickLabel.text = qsTr("Vibrate on tick");
+        vibrateOnTickLabel.text = qsTr("Vibrate on tick");*/
+/*
+        for(var i=0; i<snd_lst.count;i++){
+            snd_lst.get(i).text = qsTr(snd_lst.get(i).key);
+        }
+
+        for(var i=0;i<snd_lst.count;i++){
+
+            soundNumberOnCircleChooseBox.model.get(i).text = qsTr(soundNumberOnCircleChooseBox.model.get(i).key);
+            soundOnTickChooseBox.model.get(i).text = qsTr(soundOnTickChooseBox.model.get(i).key);
+
+        }
+        soundNumberOnCircleChooseBox.displayText = qsTr(soundNumberOnCircleChooseBox.model.get(soundNumberOnCircleChooseBox.currentIndex).key);
+        soundOnTickChooseBox.displayText = qsTr(soundOnTickChooseBox.model.get(soundOnTickChooseBox.currentIndex).key);
+        soundOnTickChooseBox.model.sync();
+        soundNumberOnCircleChooseBox.model.sync();*/
+
+        soundOnTickChooseBox.model = snd_lst;
+        soundOnTickChooseBox.currentIndex = soundNumberOnTick;
+        soundNumberOnCircleChooseBox.model = snd_lst;
+        soundNumberOnCircleChooseBox.currentIndex = soundNumberOnCircle;
 
     }
 
@@ -102,11 +122,11 @@ Window {
     ListModel{
         id:snd_lst
         objectName: "snd_lst"
-        ListElement{key:"Metal short"; text:qsTr("Metal short"); value:0;}
-        ListElement{key:"Bell ding"; text:qsTr("Bell ding"); value:1;}
-        ListElement{key:"Ding"; text:qsTr("Ding"); value:2;}
-        ListElement{key:"Bells down"; text:qsTr("Bells down"); value:3;}
-        ListElement{key:"Bells up"; text:qsTr("Bells up"); value:4;}
+        ListElement{key:qsTr("Metal short");}//  text:qsTr("Metal short"); value:0;}
+        ListElement{key:qsTr("Bell ding");  }//  text:qsTr("Bell ding"); value:1;}
+        ListElement{key:qsTr("Ding");       }//  text:qsTr("Ding"); value:2;}
+        ListElement{key:qsTr("Bells down"); }//  text:qsTr("Bells down"); value:3;}
+        ListElement{key:qsTr("Bells up");   }//  text:qsTr("Bells up"); value:4;}
     }
 
     Rectangle {
@@ -144,11 +164,11 @@ Window {
                     for(var i=0;i<snd_lst.count;i++){
                         if(soundNumberOnCircle == i){
                             soundNumberOnCircleChooseBox.currentIndex = i;
-                            soundNumberOnCircleChooseBox.displayText = snd_lst.get(i).text; //qsTr(soundNumberOnCircleChooseBox.currentText);
+                            //soundNumberOnCircleChooseBox.displayText = snd_lst.get(i).text; //qsTr(soundNumberOnCircleChooseBox.currentText);
                         }
                         if(soundNumberOnTick == i){
                             soundOnTickChooseBox.currentIndex = i;
-                            soundOnTickChooseBox.displayText = snd_lst.get(i).text; //qsTr(soundOnTickChooseBox.currentText);
+                            //soundOnTickChooseBox.displayText = snd_lst.get(i).text; //qsTr(soundOnTickChooseBox.currentText);
                         }
                     }
                 }
@@ -289,7 +309,7 @@ Window {
                 objectName: "ticksPerCircleLabel"
                 width: parent.c1_width
                 text: qsTr("Ticks per circle")
-                wrapMode: Text.Word
+                wrapMode: Text.WordWrap
                 Layout.leftMargin: parent.c1_leftMargin
                 font: Theme.font
                 Layout.maximumWidth: parent.c1_width
@@ -435,10 +455,10 @@ Window {
                 Layout.alignment: Qt.AlignCenter
                 implicitWidth: parent.c2_width
                 editable: false;
-                textRole: "text"
+                textRole: "key"
                 font: Theme.font
                 model: snd_lst
-                displayText: qsTr(currentText)
+                displayText: snd_lst.get(currentIndex).key
                 onActivated: {
                     soundNumberOnTick = currentIndex
                     snd.pl(soundNumberOnTick);
@@ -485,10 +505,10 @@ Window {
                 Layout.alignment: Qt.AlignCenter
                 implicitWidth: parent.c2_width
                 editable: false;
-                textRole: "text"
+                textRole: "key"
                 font: Theme.font
                 model: snd_lst
-                displayText: qsTr(currentText)
+                displayText: snd_lst.get(currentIndex).key
                 onActivated: {
                     soundNumberOnCircle = currentIndex
                     snd.pl(soundNumberOnCircle);

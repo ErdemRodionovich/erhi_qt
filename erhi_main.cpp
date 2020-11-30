@@ -166,6 +166,9 @@ void erhi_main::setLanguage(QString lang){
         if(app->installTranslator(&translator)){
 
             engine->retranslate();
+            QMetaObject::invokeMethod(proot,
+                                      "updateTexts",
+                                      Qt::QueuedConnection);
             qDebug()<<"install translator successfully!";
 
         }else {
